@@ -5,8 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "llama-index>=0.14.10",
+    "chromadb>=1.4.0",
+    "llama-index[ollama]>=0.14.10",
     "llama-index-embeddings-huggingface>=0.6.1",
     "llama-index-llms-groq>=0.4.1",
+    "llama-index-vector-stores-chroma>=0.5.3",
     "nest-asyncio>=1.6.0",
+    "llama-index-llms-ollama>=0.9.1",
 ]

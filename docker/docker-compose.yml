@@ -1,0 +1,24 @@
+services:
+  # Ollama LLM Service
+  ollama:
+    image: ollama/ollama:0.3.11
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - llm-data:/root/.ollama
+    networks:
+      - rag-net
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+
+
+volumes:
+  llm-data:
+    external: true
+
+networks:
+  rag-net:
+    driver: bridge
+    external: true

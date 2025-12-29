@@ -1,0 +1,20 @@
+
+
+
+DATA_PATH= "data/raw/articles.json"
+MODEL_NAME= "llama3.2:latest"
+BASE_URL= "localhost"
+PORT= 11434
+KEEP_ALIVE= 0
+CONTEXT_WINDOW= 1024
+REQUEST_TIMEOUT= 300.0
+TEMPERATURE= 0.1
+
+# Transformation parameters
+SEPARATOR= " "
+CHUNK_SIZE= 1024
+CHUNK_OVERLAP= 128
+NODES= 2
+QUESTIONS= 3
+
+SIMILARITY_TOP_K= 3
