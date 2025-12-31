@@ -12,4 +12,6 @@ dependencies = [
     "llama-index-vector-stores-chroma>=0.5.3",
     "nest-asyncio>=1.6.0",
     "llama-index-llms-ollama>=0.9.1",
+    "rouge-score>=0.1.2",
+    "onnxruntime>=1.23.2",
 ]

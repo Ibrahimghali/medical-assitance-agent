@@ -12,3 +12,4 @@ data/
 .env
 docs
 chroma_db
+model
