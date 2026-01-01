@@ -43,6 +43,9 @@ docker volume create llm-data
 
 # Create external network
 docker network create rag-net
+
+mkdir data
+under data you can upload the document reference
 ```
 
 ##  Installation
