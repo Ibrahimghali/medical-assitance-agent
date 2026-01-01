@@ -1,8 +1,9 @@
 
  
 from config import BASE_URL, COLLECTION_NAME, CONTEXT_WINDOW, KEEP_ALIVE, MODEL_NAME, ONNX_MODEL_PATH, PERSISTANT_STORAGE, PORT, RERANK_MODEL_PATH, RERANK_TOKENIZER_NAME, RERANK_TOP_N, REQUEST_TIMEOUT, SYSTEM_PROMPT, TEMPERATURE, TOKENIZER_NAME, VERSION
-from model_wrapper import ONNXEmbedding, ONNXReranker
-from utils import init_llm, set_utc_log
+from utils.cleaner import set_utc_log
+from utils.intilizer import init_llm
+from utils.model_wrapper import ONNXEmbedding, ONNXReranker
 import chromadb
 from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.core import ( VectorStoreIndex, PromptTemplate,)
@@ -11,23 +12,29 @@ from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.response_synthesizers import get_response_synthesizer
 from llama_index.core.vector_stores import MetadataFilters, ExactMatchFilter
 
-def test(query_engine):
-    test_queries = [
-        "What causes acne?",
-        "How to treat athlete's foot?"
-    ]
-    for q in test_queries:
-        resp = query_engine.query(q)
-        print("\n==============================")
-        print("QUESTION:", q)
-        print("ANSWER:\n", resp.response)
-        print("SOURCES:")
-        for node in getattr(resp, "source_nodes", []):
-            print("-", node.node.metadata.get("title"), node.node.metadata.get("url"))
 
-def main():
+def test(query_engine, query_text):
+    resp = query_engine.query(query_text)
+    sources = []
+    for node_with_score in resp.source_nodes:
+        node = node_with_score.node
+        meta = node.metadata
+
+        sources.append({
+            "title": meta.get("title"),
+            "url": meta.get("url"),
+            "score": node_with_score.score
+        })
+
+    return {
+        "answer": resp.response,
+        "sources": sources
+    }
+
+
+def run_query(query_text, base_url, port, model_name, keep_alive, context_window, request_timeout, temperatue):
     logger = set_utc_log()
-    llm = init_llm( BASE_URL, PORT, MODEL_NAME, KEEP_ALIVE, CONTEXT_WINDOW, REQUEST_TIMEOUT, TEMPERATURE)
+    llm = init_llm( base_url, port, model_name, keep_alive, context_window, request_timeout, temperatue)
 
     embed_model = ONNXEmbedding(model_path=ONNX_MODEL_PATH, tokenizer_name=TOKENIZER_NAME)
 
@@ -88,9 +95,8 @@ def main():
     )
 
     logger.info("Query engine ready for use")
+    resp = test(query_engine= query_engine, query_text= query_text)
+    return resp
     
-    test(query_engine)
+    
 
-
-if __name__ == "__main__":
-    main()

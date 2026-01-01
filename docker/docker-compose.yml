@@ -13,6 +13,26 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
 
+  # RAG Service
+  rag-service:
+    build:
+      context: ..
+      dockerfile: docker/rag.srv.dockerfile
+    container_name: rag-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../chroma_db:/app/chroma_db
+      - ../data:/app/data
+      - ../model:/app/model
+    networks:
+      - rag-net
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - ollama
+    restart: unless-stopped
+
 
 volumes:
   llm-data:

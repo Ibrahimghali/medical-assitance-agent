@@ -12,4 +12,7 @@ data/
 .env
 docs
 chroma_db
-model
+
+# Those are embedding and reranking model
+model/BAAI
+model/reranking

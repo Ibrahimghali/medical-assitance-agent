@@ -10,7 +10,6 @@ CONTEXT_WINDOW= 1024
 REQUEST_TIMEOUT= 300.0
 TEMPERATURE= 0.1
 
-
 SEPARATOR= " "
 CHUNK_SIZE= 512
 CHUNK_OVERLAP= 80
@@ -20,9 +19,6 @@ VERSION= "v0.0.2"
 
 SIMILARITY_TOP_K= 3
 RERANK_TOP_N = 3
-
-# EMBEDDING_MODEL = "model/embedding/BAAI/model.onnx"
-# RERANK_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
 SYSTEM_PROMPT=  """"
 You are a medical question answering assistant.
