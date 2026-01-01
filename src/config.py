@@ -3,7 +3,7 @@
 
 DATA_PATH= "data/raw/articles.json"
 MODEL_NAME= "llama3.2:latest"
-BASE_URL= "localhost"
+BASE_URL= "ollama"
 PORT= 11434
 KEEP_ALIVE= 0
 CONTEXT_WINDOW= 1024
